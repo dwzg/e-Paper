@@ -66,9 +66,9 @@ class EPD:
         
     def ReadBusy(self):
         logging.debug("e-Paper busy")
-        self.send_command(0x71);
+        self.send_command(0x71)
         while(epdconfig.digital_read(self.busy_pin) == 0): # 0: idle, 1: busy
-            self.send_command(0x71);
+            self.send_command(0x71)
             epdconfig.delay_ms(20)
         logging.debug("e-Paper busy release")
             
@@ -78,11 +78,11 @@ class EPD:
             
         self.reset()
         
-        self.send_command(0x04); 
-        self.ReadBusy();
+        self.send_command(0x04) 
+        self.ReadBusy()
 
-        self.send_command(0x00);
-        self.send_data(0x0f);
+        self.send_command(0x00)
+        self.send_data(0x0f)
         
         return 0
 
@@ -137,13 +137,13 @@ class EPD:
         self.ReadBusy()
 
     def sleep(self):
-        self.send_command(0X50);
-        self.send_data(0xf7);		#border floating	
+        self.send_command(0X50)
+        self.send_data(0xf7)		#border floating	
 
-        self.send_command(0X02);  	#power off
-        self.ReadBusy(); #waiting for the electronic paper IC to release the idle signal
-        self.send_command(0X07);  	#deep sleep
-        self.send_data(0xA5);
+        self.send_command(0X02)  	#power off
+        self.ReadBusy() #waiting for the electronic paper IC to release the idle signal
+        self.send_command(0X07)  	#deep sleep
+        self.send_data(0xA5)
         
     def Dev_exit(self):
         epdconfig.module_exit()
