@@ -1,6 +1,6 @@
 # /*****************************************************************************
 # * | File        :	  epdconfig.py
-# * | Author      :   Waveshare team
+# * | Author      :   Waveshare team, Dennis Witzig
 # * | Function    :   Hardware underlying interface
 # * | Info        :
 # *----------------
@@ -57,6 +57,9 @@ class RaspberryPi:
 
     def delay_ms(self, delaytime):
         time.sleep(delaytime / 1000.0)
+
+    def spi_readbyte(self):
+        return self.SPI.readbytes(1)
 
     def spi_writebyte(self, data):
         self.SPI.writebytes(data)
