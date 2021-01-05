@@ -141,11 +141,11 @@ class EPD:
 
     def display(self, imageblack, imagered):
         self.send_command(0x10)
-        for _ in itertools.repeat(None, (int(self.width * self.height / 8))):
+        for i in range(0, int(self.width * self.height / 8)):
             self.send_data(imageblack[i])
 
         self.send_command(0x13)
-        for _ in itertools.repeat(None, (int(self.width * self.height / 8))):
+        for i in range(0, int(self.width * self.height / 8)):
             self.send_data(imagered[i])
 
         self.send_command(0x12)
