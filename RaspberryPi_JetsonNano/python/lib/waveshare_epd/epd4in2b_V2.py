@@ -65,7 +65,7 @@ class EPD:
         epdconfig.digital_write(self.cs_pin, 1)
 
     def receive_data(self):
-        epdconfig.digital_write(self.dc_pin, 1)
+        epdconfig.digital_write(self.dc_pin, 0)
         epdconfig.digital_write(self.cs_pin, 0)
         data = epdconfig.spi_readbyte()
         epdconfig.digital_write(self.cs_pin, 1)
