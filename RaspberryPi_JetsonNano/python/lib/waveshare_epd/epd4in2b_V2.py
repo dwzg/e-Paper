@@ -81,8 +81,9 @@ class EPD:
         self.send_command(0x01) # POWER SETTING
         self.send_data(0x03) # VDS_EN, VDG_EN
         self.send_data(0x00) # VCOM_HV, VGHL_LV[1], VGHL_LV[0]
-        self.send_data(0x2b) # VDH
-        self.send_data(0x2b) # VDL
+        self.send_data(0x26) # VDH
+        self.send_data(0x26) # VDL
+        self.send_data(0x03) # VDHR
         
         self.send_command(0x06) # boost soft start
         self.send_data(0x17)
@@ -100,9 +101,9 @@ class EPD:
 
         self.send_command(0x61)	# resolution setting
         self.send_data(0x01)
-        self.send_data(0x90) # 128
+        self.send_data(0x90)
         self.send_data(0x01)		
-        self.send_data(0x2c)
+        self.send_data(0x2b)
         
         return 0
 
