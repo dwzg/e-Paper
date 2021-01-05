@@ -46,11 +46,11 @@ class EPD:
     # Hardware reset
     def reset(self):
         epdconfig.digital_write(self.reset_pin, 1)
-        epdconfig.delay_ms(200) 
+        epdconfig.delay_ms(200)
         epdconfig.digital_write(self.reset_pin, 0)
         epdconfig.delay_ms(5)
         epdconfig.digital_write(self.reset_pin, 1)
-        epdconfig.delay_ms(200)   
+        epdconfig.delay_ms(200)
 
     def send_command(self, command):
         epdconfig.digital_write(self.dc_pin, 0)
@@ -63,7 +63,7 @@ class EPD:
         epdconfig.digital_write(self.cs_pin, 0)
         epdconfig.spi_writebyte([data])
         epdconfig.digital_write(self.cs_pin, 1)
-        
+
     def ReadBusy(self):
         logging.debug("e-Paper busy")
         self.send_command(0x71)
@@ -71,13 +71,13 @@ class EPD:
             self.send_command(0x71)
             epdconfig.delay_ms(20)
         logging.debug("e-Paper busy release")
-            
+
     def init(self):
         if (epdconfig.module_init() != 0):
             return -1
-            
+
         self.reset()
-        
+
         self.send_command(0x01) # POWER SETTING
         self.send_data(0x03) # VDS_EN, VDG_EN
         self.send_data(0x00) # VCOM_HV, VGHL_LV[1], VGHL_LV[0]
@@ -102,9 +102,9 @@ class EPD:
         self.send_command(0x61)	# resolution setting
         self.send_data(0x01)
         self.send_data(0x90)
-        self.send_data(0x01)		
+        self.send_data(0x01)
         self.send_data(0x2b)
-        
+
         return 0
 
     def getbuffer(self, image):
@@ -135,37 +135,37 @@ class EPD:
         self.send_command(0x10)
         for i in range(0, int(self.width * self.height / 8)):
             self.send_data(imageblack[i])
-        
+
         self.send_command(0x13)
         for i in range(0, int(self.width * self.height / 8)):
             self.send_data(imagered[i])
-        
-        self.send_command(0x12) 
+
+        self.send_command(0x12)
         epdconfig.delay_ms(20)
         self.ReadBusy()
-        
+
     def Clear(self):
         self.send_command(0x10)
         for i in range(0, int(self.width * self.height / 8)):
             self.send_data(0xFF)
-            
+
         self.send_command(0x13)
         for i in range(0, int(self.width * self.height / 8)):
             self.send_data(0xFF)
-        
-        self.send_command(0x12) 
+
+        self.send_command(0x12)
         epdconfig.delay_ms(20)
         self.ReadBusy()
 
     def sleep(self):
         self.send_command(0X50)
-        self.send_data(0xf7)		#border floating	
+        self.send_data(0xf7) #border floating	
 
-        self.send_command(0X02)  	#power off
+        self.send_command(0X02) #power off
         self.ReadBusy() #waiting for the electronic paper IC to release the idle signal
-        self.send_command(0X07)  	#deep sleep
+        self.send_command(0X07) #deep sleep
         self.send_data(0xA5)
-        
+
     def Dev_exit(self):
         epdconfig.module_exit()
 ### END OF FILE ###
