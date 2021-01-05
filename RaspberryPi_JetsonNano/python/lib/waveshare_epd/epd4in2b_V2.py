@@ -64,6 +64,13 @@ class EPD:
         epdconfig.spi_writebyte([data])
         epdconfig.digital_write(self.cs_pin, 1)
 
+    def receive_data(self):
+        epdconfig.digital_write(self.dc_pin, 1)
+        epdconfig.digital_write(self.cs_pin, 0)
+        data = epdconfig.spi_readbyte()
+        epdconfig.digital_write(self.cs_pin, 1)
+        return data
+
     def ReadBusy(self):
         logging.debug("e-Paper busy")
         self.send_command(0x71)
