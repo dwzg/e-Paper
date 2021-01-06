@@ -173,7 +173,7 @@ class EPD:
         self.reset()
 
         self.sendCommand("PSR")
-        self.sendData(0x0F)
+        self.sendData(0x2F)
 
         self.sendCommand("PWR") # POWER SETTING
         self.sendData(0x03) # VDS_EN, VDG_EN
