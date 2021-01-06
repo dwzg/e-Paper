@@ -132,7 +132,7 @@ class EPD:
         self.sendData(0x26) # VDL
         self.sendData(0x03) # VDHR
         
-        self.sendCommand("BTST) # boost soft start
+        self.sendCommand("BTST") # boost soft start
         self.sendData(0x17)
         self.sendData(0x17)
         self.sendData(0x17)
@@ -143,10 +143,10 @@ class EPD:
         self.sendCommand("PSR")
         self.sendData(0x0F)
 
-        self.sendCommand("PLL) # PLL setting
+        self.sendCommand("PLL") # PLL setting
         self.sendData(0x3C) # 3A 100HZ   29 150Hz 39 200HZ  31 171HZ
 
-        self.sendCommand("TRES)	# resolution setting
+        self.sendCommand("TRES")	# resolution setting
         self.sendData(0x01)
         self.sendData(0x90)
         self.sendData(0x01)
