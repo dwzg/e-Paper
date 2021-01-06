@@ -183,9 +183,13 @@ class EPD:
         for i in range(0, nBytes):
             self.sendData(imageBlack[i])
 
+        self.sendCommand("DSP")
+
         self.sendCommand("DTM2")
         for i in range(0, nBytes):
             self.sendData(imageRed[i])
+
+        self.sendCommand("DSP")
 
         self.sendCommand("DRF")
         epdconfig.delay_ms(20)
@@ -196,9 +200,13 @@ class EPD:
         for _ in itertools.repeat(None, (int(self.width * self.height / 8))):
             self.sendData(0xFF)
 
+        self.sendCommand("DSP")
+
         self.sendCommand("DTM2")
         for _ in itertools.repeat(None, (int(self.width * self.height / 8))):
             self.sendData(0xFF)
+
+        self.sendCommand("DSP")
 
         self.sendCommand("DRF")
         epdconfig.delay_ms(20)
