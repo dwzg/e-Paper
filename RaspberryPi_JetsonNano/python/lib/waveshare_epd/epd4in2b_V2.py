@@ -142,7 +142,7 @@ class EPD:
 
         self.sendCommand("PSR")
         self.sendData(0x0F)
-        self.send_data(0x0d)
+        self.sendData(0x0D)
 
         self.sendCommand("PLL") # PLL setting
         self.sendData(0x3C) # 3A 100HZ   29 150Hz 39 200HZ  31 171HZ
