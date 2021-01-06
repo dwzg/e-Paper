@@ -125,23 +125,15 @@ class EPD:
 
         self.reset()
 
+        self.sendCommand("PSR")
+        self.sendData(0x0F)
+
         self.sendCommand("PWR") # POWER SETTING
         self.sendData(0x03) # VDS_EN, VDG_EN
         self.sendData(0x00) # VCOM_HV, VGHL_LV[1], VGHL_LV[0]
         self.sendData(0x26) # VDH
         self.sendData(0x26) # VDL
         self.sendData(0x03) # VDHR
-        
-        self.sendCommand("BTST") # boost soft start
-        self.sendData(0x17)
-        self.sendData(0x17)
-        self.sendData(0x17)
-        
-        self.sendCommand("PON") # POWER_ON
-        self.readBusy()
-
-        self.sendCommand("PSR")
-        self.sendData(0x0F)
 
         self.sendCommand("PLL") # PLL setting
         self.sendData(0x3C) # 3A 100HZ   29 150Hz 39 200HZ  31 171HZ
@@ -154,6 +146,14 @@ class EPD:
 
         self.sendCommand("CDI")
         self.sendData(0xD7)
+
+        self.sendCommand("BTST") # boost soft start
+        self.sendData(0x17)
+        self.sendData(0x17)
+        self.sendData(0x17)
+
+        self.sendCommand("PON") # POWER_ON
+        self.readBusy()
 
     def getBuffer(self, image):
         buf = [0xFF] * (int(self.width/8) * self.height)
