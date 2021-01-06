@@ -47,7 +47,8 @@ class RaspberryPi:
         self.GPIO = RPi.GPIO
 
         # SPI device, bus = 0, device = 0
-        self.SPI = spidev.SpiDev(0, 0)
+        self.SPI = spidev.SpiDev()
+        self.SPI.open(0, 0)
 
     def digital_write(self, pin, value):
         self.GPIO.output(pin, value)
@@ -57,9 +58,6 @@ class RaspberryPi:
 
     def delay_ms(self, delaytime):
         time.sleep(delaytime / 1000.0)
-
-    def spi_readbyte(self):
-        return self.SPI.readbytes(1)
 
     def spi_writebyte(self, data):
         self.SPI.writebytes(data)
