@@ -71,7 +71,6 @@ class RaspberryPi:
         self.GPIO.setup(self.BUSY_PIN, self.GPIO.IN)
         self.SPI.max_speed_hz = 4000000
         self.SPI.mode = 0b00
-        return 0
 
     def module_exit(self):
         logging.debug("spi end")
