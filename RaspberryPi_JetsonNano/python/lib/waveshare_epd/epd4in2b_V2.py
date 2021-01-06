@@ -152,6 +152,9 @@ class EPD:
         self.sendData(0x17)
         self.sendData(0x17)
 
+        self.send_command("VDCS") # vcom_DC setting
+        self.send_data(0x00)
+
         self.sendCommand("PON") # POWER_ON
         self.readBusy()
 
