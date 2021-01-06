@@ -201,13 +201,13 @@ class EPD:
     def clear(self):
         self.sendCommand("DTM1")
         for _ in itertools.repeat(None, (int(self.width * self.height / 8))):
-            self.sendData(0xFF)
+            self.sendData(0x00)
 
         self.sendCommand("DSP")
 
         self.sendCommand("DTM2")
         for _ in itertools.repeat(None, (int(self.width * self.height / 8))):
-            self.sendData(0xFF)
+            self.sendData(0x00)
 
         self.sendCommand("DSP")
 
