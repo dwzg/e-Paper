@@ -59,7 +59,7 @@ int EPD_2in13_V3_test(void)
 	Paint_Clear(WHITE);
 	
 #if 1   // show bmp
-	Paint_NewImage(BlackImage, EPD_2in13_V3_WIDTH, EPD_2in13_V3_HEIGHT, 0, WHITE);
+	Paint_NewImage(BlackImage, EPD_2in13_V3_WIDTH, EPD_2in13_V3_HEIGHT, 90, WHITE);
     printf("show window BMP-----------------\r\n");
     Paint_SelectImage(BlackImage);
     GUI_ReadBmp("./pic/100x100.bmp", 0, 0);
@@ -68,16 +68,16 @@ int EPD_2in13_V3_test(void)
 
     printf("show bmp------------------------\r\n");
     Paint_SelectImage(BlackImage);
-    GUI_ReadBmp("./pic/2in13-v2.bmp", 0, 0);
+    GUI_ReadBmp("./pic/2in13_1.bmp", 0, 0);
     EPD_2in13_V3_Display(BlackImage);
     DEV_Delay_ms(3000);
 #endif
 
-#if 0   //show image for array    
+#if 1   //show image for array    
     printf("show image for array\r\n");
     Paint_SelectImage(BlackImage);
     Paint_Clear(WHITE);
-    Paint_DrawBitMap(gImage_2in13);
+    Paint_DrawBitMap(gImage_2in13_2);
 
     EPD_2in13_V3_Display(BlackImage);
     DEV_Delay_ms(2000);
@@ -116,7 +116,7 @@ int EPD_2in13_V3_test(void)
     DEV_Delay_ms(3000);
 #endif
 
-#if 1   //Partial refresh, example shows time    		
+#if 1   //Partial refresh, example shows time
 	Paint_NewImage(BlackImage, EPD_2in13_V3_WIDTH, EPD_2in13_V3_HEIGHT, 90, WHITE);  
     printf("Partial refresh\r\n");
     Paint_SelectImage(BlackImage);

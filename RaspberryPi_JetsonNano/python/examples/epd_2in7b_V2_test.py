@@ -61,7 +61,7 @@ try:
     drawred = ImageDraw.Draw(LRedimage)
     
     drawblack.text((2, 0), 'hello world', font = font18, fill = 0)
-    drawblack.text((2, 20), '2.9inch epd', font = font18, fill = 0)
+    drawblack.text((2, 20), '2.7inch epd', font = font18, fill = 0)
     drawblack.text((20, 50), u'微雪电子', font = font18, fill = 0)
     drawblack.line((10, 90, 60, 140), fill = 0)
     drawblack.line((60, 90, 10, 140), fill = 0)
@@ -93,9 +93,6 @@ try:
     
     logging.info("Goto Sleep...")
     epd.sleep()
-
-    time.sleep(3)
-    epd.Dev_exit()
         
 except IOError as e:
     logging.info(e)

@@ -42,6 +42,8 @@ GRAY2  = 0xC0
 GRAY3  = 0x80 #gray
 GRAY4  = 0x00 #Blackest
 
+logger = logging.getLogger(__name__)
+
 class EPD:
     def __init__(self):
         self.reset_pin = epdconfig.RST_PIN
@@ -202,11 +204,19 @@ class EPD:
     # Hardware reset
     def reset(self):
         epdconfig.digital_write(self.reset_pin, 1)
-        epdconfig.delay_ms(200) 
+        epdconfig.delay_ms(20) 
         epdconfig.digital_write(self.reset_pin, 0)
         epdconfig.delay_ms(5)
         epdconfig.digital_write(self.reset_pin, 1)
-        epdconfig.delay_ms(200)   
+        epdconfig.delay_ms(20)   
+        epdconfig.digital_write(self.reset_pin, 0)
+        epdconfig.delay_ms(5)
+        epdconfig.digital_write(self.reset_pin, 1)
+        epdconfig.delay_ms(20)   
+        epdconfig.digital_write(self.reset_pin, 0)
+        epdconfig.delay_ms(5)
+        epdconfig.digital_write(self.reset_pin, 1)
+        epdconfig.delay_ms(20)
 
     def send_command(self, command):
         epdconfig.digital_write(self.dc_pin, 0)
@@ -380,21 +390,21 @@ class EPD:
         self.send_data(0x97)
 
     def getbuffer(self, image):
-        # logging.debug("bufsiz = ",int(self.width/8) * self.height)
+        # logger.debug("bufsiz = ",int(self.width/8) * self.height)
         buf = [0xFF] * (int(self.width/8) * self.height)
         image_monocolor = image.convert('1')
         imwidth, imheight = image_monocolor.size
         pixels = image_monocolor.load()
-        # logging.debug("imwidth = %d, imheight = %d",imwidth,imheight)
+        # logger.debug("imwidth = %d, imheight = %d",imwidth,imheight)
         if(imwidth == self.width and imheight == self.height):
-            logging.debug("Horizontal")
+            logger.debug("Horizontal")
             for y in range(imheight):
                 for x in range(imwidth):
                     # Set the bits for the column of pixels at the current position.
                     if pixels[x, y] == 0:
                         buf[int((x + y * self.width) / 8)] &= ~(0x80 >> (x % 8))
         elif(imwidth == self.height and imheight == self.width):
-            logging.debug("Vertical")
+            logger.debug("Vertical")
             for y in range(imheight):
                 for x in range(imwidth):
                     newx = y
@@ -404,15 +414,15 @@ class EPD:
         return buf
         
     def getbuffer_4Gray(self, image):
-        # logging.debug("bufsiz = ",int(self.width/8) * self.height)
+        # logger.debug("bufsiz = ",int(self.width/8) * self.height)
         buf = [0xFF] * (int(self.width / 4) * self.height)
         image_monocolor = image.convert('L')
         imwidth, imheight = image_monocolor.size
         pixels = image_monocolor.load()
         i=0
-        # logging.debug("imwidth = %d, imheight = %d",imwidth,imheight)
+        # logger.debug("imwidth = %d, imheight = %d",imwidth,imheight)
         if(imwidth == self.width and imheight == self.height):
-            logging.debug("Vertical")
+            logger.debug("Vertical")
             for y in range(imheight):
                 for x in range(imwidth):
                     # Set the bits for the column of pixels at the current position.
@@ -425,7 +435,7 @@ class EPD:
                         buf[int((x + (y * self.width))/4)] = ((pixels[x-3, y]&0xc0) | (pixels[x-2, y]&0xc0)>>2 | (pixels[x-1, y]&0xc0)>>4 | (pixels[x, y]&0xc0)>>6)
                         
         elif(imwidth == self.height and imheight == self.width):
-            logging.debug("Horizontal")
+            logger.debug("Horizontal")
             for x in range(imwidth):
                 for y in range(imheight):
                     newx = y
@@ -592,7 +602,7 @@ class EPD:
         self.send_command(0x07) # DEEP_SLEEP
         self.send_data(0XA5)
         
-    def Dev_exit(self):
+        epdconfig.delay_ms(2000)
         epdconfig.module_exit()
         
 ### END OF FILE ###

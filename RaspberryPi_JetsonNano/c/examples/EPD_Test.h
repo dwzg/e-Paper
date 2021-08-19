@@ -37,6 +37,9 @@
 #include "Debug.h"
 #include <stdlib.h> // malloc() free()
 
+int EPD_1in54_DES_test(void);
+int EPD_2in13_DES_test(void);
+int EPD_2in9_DES_test(void);
 
 int EPD_1in02d_test(void);
 
@@ -49,6 +52,7 @@ int EPD_1in54c_test(void);
 int EPD_2in66_test(void);
 int	EPD_2in66b_test(void); 
 int EPD_2in7_test(void);
+int EPD_2in7_V2_test(void);
 int EPD_2in7b_test(void);
 int EPD_2in7b_V2_test(void);
 
@@ -70,8 +74,11 @@ int EPD_3in7_test(void);
 int EPD_4in01f_test(void);
 
 int EPD_4in2_test(void);
+int EPD_4in2_V2_test(void);
 int EPD_4in2bc_test(void);
 int EPD_4in2b_V2_test(void);
+
+int EPD_4in37b_test(void);
 
 int EPD_5in65f_test(void);
 
@@ -80,10 +87,16 @@ int EPD_5in83_V2_test(void);
 int EPD_5in83bc_test(void);
 int EPD_5in83b_V2_test(void);
 
+int EPD_5in84_test(void);
+
 int EPD_7in5_test(void);
 int EPD_7in5_HD_test(void);
 int EPD_7in5_V2_test(void);
 int EPD_7in5bc_test(void);
 int EPD_7in5b_V2_test(void);
 int EPD_7in5b_HD_test(void);
+
+int EPD_10in2b_test(void);
+
+int EPD_13in3_test(void);
 #endif

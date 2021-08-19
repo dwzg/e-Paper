@@ -91,14 +91,13 @@ try:
         num = num + 1
         if(num == 10):
             break
-    
+            
+    epd.init()
     logging.info("Clear...")
     epd.Clear(0xFF)
-    
+    time.sleep(2)
     logging.info("Goto Sleep...")
     epd.sleep()
-    time.sleep(3)
-    epd.Dev_exit()
         
 except IOError as e:
     logging.info(e)

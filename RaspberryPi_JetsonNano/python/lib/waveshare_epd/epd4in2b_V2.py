@@ -75,6 +75,8 @@ commands = {
 EPD_WIDTH       = 400
 EPD_HEIGHT      = 300
 
+logger = logging.getLogger(__name__)
+
 class EPD:
     def __init__(self):
         self.reset_pin = epdconfig.RST_PIN
@@ -108,7 +110,6 @@ class EPD:
         epdconfig.digital_write(self.cs_pin, 0)
         epdconfig.spi_writebyte([data])
         epdconfig.digital_write(self.cs_pin, 1)
-
     def readBusy(self):
         logging.debug("e-Paper busy")
         self.sendCommand("FLG")

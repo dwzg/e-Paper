@@ -74,7 +74,7 @@ try:
 
     epd.Clear()
     logging.info("3.read bmp file")
-    Himage = Image.open(os.path.join(picdir, '4.01inch-e-Paper.bmp'))
+    Himage = Image.open(os.path.join(picdir, '4in01-1.bmp'))
     epd.display(epd.getbuffer(Himage))
     time.sleep(3)
     
@@ -96,9 +96,6 @@ try:
     epd.Clear()
     logging.info("Goto Sleep...")
     epd.sleep()
-    time.sleep(30)
-    
-    epd.Dev_exit()
     
 except IOError as e:
     logging.info(e)

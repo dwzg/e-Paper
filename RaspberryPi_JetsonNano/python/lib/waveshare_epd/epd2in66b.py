@@ -34,6 +34,8 @@ from . import epdconfig
 EPD_WIDTH       = 152
 EPD_HEIGHT      = 296
 
+logger = logging.getLogger(__name__)
+
 class EPD:
     def __init__(self):
         self.reset_pin = epdconfig.RST_PIN
@@ -68,10 +70,10 @@ class EPD:
 
 
     def ReadBusy(self):
-        logging.debug("e-Paper busy")
+        logger.debug("e-Paper busy")
         while(epdconfig.digital_read(self.busy_pin) == 1):      #  0: idle, 1: busy
             epdconfig.delay_ms(20) 
-        logging.debug("e-Paper busy release") 
+        logger.debug("e-Paper busy release") 
 
 
     def init(self):
@@ -99,44 +101,44 @@ class EPD:
         return 0
 
     def setWindows(self, Xstart, Ystart, Xend, Yend):
-        self.send_command(0x44); # SET_RAM_X_ADDRESS_START_END_POSITION
-        self.send_data((Xstart>>3) & 0x1F);
-        self.send_data((Xend>>3) & 0x1F);
+        self.send_command(0x44) # SET_RAM_X_ADDRESS_START_END_POSITION
+        self.send_data((Xstart>>3) & 0x1F)
+        self.send_data((Xend>>3) & 0x1F)
         
-        self.send_command(0x45); # SET_RAM_Y_ADDRESS_START_END_POSITION
-        self.send_data(Ystart & 0xFF);
-        self.send_data((Ystart >> 8) & 0x01);
-        self.send_data(Yend & 0xFF);
-        self.send_data((Yend >> 8) & 0x01);
+        self.send_command(0x45) # SET_RAM_Y_ADDRESS_START_END_POSITION
+        self.send_data(Ystart & 0xFF)
+        self.send_data((Ystart >> 8) & 0x01)
+        self.send_data(Yend & 0xFF)
+        self.send_data((Yend >> 8) & 0x01)
 
     def setCursor(self, Xstart, Ystart):
-        self.send_command(0x4E); # SET_RAM_X_ADDRESS_COUNTER
-        self.send_data(Xstart & 0x1F);
+        self.send_command(0x4E) # SET_RAM_X_ADDRESS_COUNTER
+        self.send_data(Xstart & 0x1F)
 
-        self.send_command(0x4F); # SET_RAM_Y_ADDRESS_COUNTER
-        self.send_data(Ystart & 0xFF);
-        self.send_data((Ystart >> 8) & 0x01);
+        self.send_command(0x4F) # SET_RAM_Y_ADDRESS_COUNTER
+        self.send_data(Ystart & 0xFF)
+        self.send_data((Ystart >> 8) & 0x01)
         
     def turnon_display(self):
         self.send_command(0x20)
         self.ReadBusy()
 
     def getbuffer(self, image):
-        # logging.debug("bufsiz = ",int(self.width/8) * self.height)
+        # logger.debug("bufsiz = ",int(self.width/8) * self.height)
         buf = [0xFF] * (int(self.width/8) * self.height)
         image_monocolor = image.convert('1')
         imwidth, imheight = image_monocolor.size
         pixels = image_monocolor.load()
-        # logging.debug("imwidth = %d, imheight = %d",imwidth,imheight)
+        # logger.debug("imwidth = %d, imheight = %d",imwidth,imheight)
         if(imwidth == self.width and imheight == self.height):
-            logging.debug("Vertical")
+            logger.debug("Vertical")
             for y in range(imheight):
                 for x in range(imwidth):
                     # Set the bits for the column of pixels at the current position.
                     if pixels[x, y] == 0:
                         buf[int((x + y * self.width) / 8)] &= ~(0x80 >> (x % 8))
         elif(imwidth == self.height and imheight == self.width):
-            logging.debug("Horizontal")
+            logger.debug("Horizontal")
             for y in range(imheight):
                 for x in range(imwidth):
                     newx = y
@@ -148,13 +150,6 @@ class EPD:
     def display(self, Blackimage, Redimage):
         if (Blackimage == None or Redimage == None):
             return            
-
-        self.send_command(0x4E)
-        self.send_data(0x01)
-        self.send_command(0x4F)
-        self.send_data(0x27)
-        self.send_data(0x01)
-
         self.send_command(0x24)
         for j in range(0, self.height):
             for i in range(0, int(self.width / 8)):
@@ -169,7 +164,6 @@ class EPD:
         
 
     def Clear(self):
-
         self.send_command(0x24)
         for j in range(0, self.height):
             for i in range(0, int(self.width / 8)):
@@ -187,7 +181,7 @@ class EPD:
         self.send_command(0X10) # DEEP_SLEEP_MODE
         self.send_data(0x01)
 
-    def Dev_exit(self):
+        epdconfig.delay_ms(2000)
         epdconfig.module_exit()
 
 ### END OF FILE ###

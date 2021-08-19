@@ -21,7 +21,7 @@ try:
     epd = epd1in54_V2.EPD()
     
     logging.info("init and Clear")
-    epd.init()
+    epd.init(0)
     epd.Clear(0xFF)
     time.sleep(1)
     
@@ -67,6 +67,7 @@ try:
     # Image.new('1', (epd.width, epd.height), 255)
     epd.displayPartBaseImage(epd.getbuffer(time_image))
     
+    epd.init(1) # into partial refresh mode
     time_draw = ImageDraw.Draw(time_image)
     num = 0
     while (True):
@@ -80,14 +81,11 @@ try:
             break
     
     logging.info("Clear...")
-    epd.init()
+    epd.init(0)
     epd.Clear(0xFF)
     
     logging.info("Goto Sleep...")
     epd.sleep()
-    time.sleep(3)
-    
-    epd.Dev_exit()
         
 except IOError as e:
     logging.info(e)

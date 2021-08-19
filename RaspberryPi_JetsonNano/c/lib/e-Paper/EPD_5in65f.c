@@ -29,7 +29,7 @@
 #
 ******************************************************************************/
 #include "EPD_5in65f.h"
-
+#include "stdlib.h"
 
 /******************************************************************************
 function:
@@ -75,12 +75,16 @@ function:
 ******************************************************************************/
 static void EPD_5IN65F_BusyHigh(void)// If BUSYN=0 then waiting
 {
+	Debug("BusyHigh \r\n");
     while(!(DEV_Digital_Read(EPD_BUSY_PIN)));
+	Debug("BusyHigh Release \r\n");
 }
 
 static void EPD_5IN65F_BusyLow(void)// If BUSYN=1 then waiting
 {
+	Debug("BusyLow \r\n");
     while(DEV_Digital_Read(EPD_BUSY_PIN));
+	Debug("BusyLow Release \r\n");
 }
 
 /******************************************************************************
@@ -106,8 +110,8 @@ void EPD_5IN65F_Init(void)
     EPD_5IN65F_SendData(0xC7);
     EPD_5IN65F_SendData(0x1D);
     EPD_5IN65F_SendCommand(0x30);
-    EPD_5IN65F_SendData(0x3C);
-    EPD_5IN65F_SendCommand(0x40);
+    EPD_5IN65F_SendData(0x39);
+    EPD_5IN65F_SendCommand(0x41);
     EPD_5IN65F_SendData(0x00);
     EPD_5IN65F_SendCommand(0x50);
     EPD_5IN65F_SendData(0x37);
@@ -167,12 +171,14 @@ void EPD_5IN65F_Display(const UBYTE *image)
     for(i=0; i<EPD_5IN65F_HEIGHT; i++) {
         for(j=0; j<EPD_5IN65F_WIDTH/2; j++) {
             EPD_5IN65F_SendData(image[j+((EPD_5IN65F_WIDTH/2)*i)]);
-			// printf("0x%x, ", image[j+((EPD_5IN65F_WIDTH/2)*i)]);
-			// k++;
-			// if(k == 16) {
-				// printf("\n");
-				// k = 0;
-			// }
+			/* print image to array
+			printf("0x%x, ", image[j+((EPD_5IN65F_WIDTH/2)*i)]);
+			k++;
+			if(k == 16) {
+				printf("\n");
+				k = 0;
+			}
+			*/
 		}
 	}
     EPD_5IN65F_SendCommand(0x04);//0x04

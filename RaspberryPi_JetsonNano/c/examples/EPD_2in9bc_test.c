@@ -79,15 +79,6 @@ int EPD_2in9bc_test(void)
     Paint_Clear(WHITE);    
     EPD_2IN9BC_Display(BlackImage, RYImage);
     DEV_Delay_ms(2000);
-
-    printf("show red bmp------------------------\r\n");
-    Paint_SelectImage(BlackImage);
-    GUI_ReadBmp("./pic/2in9bc-b.bmp", 0, 0);
-    Paint_SelectImage(RYImage);
-    GUI_ReadBmp("./pic/2in9bc-ry.bmp", 0, 0);
-    EPD_2IN9BC_Display(BlackImage, RYImage);
-    DEV_Delay_ms(2000);
-
 #endif
 
 #if 1   // show image for array    

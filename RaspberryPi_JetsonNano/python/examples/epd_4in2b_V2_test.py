@@ -21,7 +21,7 @@ try:
     epd = epd4in2b_V2.EPD()
     logging.info("init and Clear")
     epd.init()
-    epd.Clear()
+    epd.clear()
     time.sleep(1)
     
     # Drawing on the image
@@ -46,7 +46,7 @@ try:
     drawry.arc((140, 50, 190, 100), 0, 360, fill = 0)
     drawry.rectangle((80, 50, 130, 100), fill = 0)
     drawry.chord((200, 50, 250, 100), 0, 360, fill = 0)
-    epd.display(epd.getbuffer(HBlackimage), epd.getbuffer(HRYimage))
+    epd.display(epd.getBuffer(HBlackimage), epd.getBuffer(HRYimage))
     time.sleep(2)
     
     # Drawing on the Vertical image
@@ -67,7 +67,7 @@ try:
     drawry.arc((70, 90, 120, 140), 0, 360, fill = 0)
     drawry.rectangle((10, 150, 60, 200), fill = 0)
     drawry.chord((70, 150, 120, 200), 0, 360, fill = 0)
-    epd.display(epd.getbuffer(LBlackimage), epd.getbuffer(LRYimage))
+    epd.display(epd.getBuffer(LBlackimage), epd.getBuffer(LRYimage))
     time.sleep(2)
     
     logging.info("3.read bmp file")
@@ -75,7 +75,7 @@ try:
     HRYimage = Image.open(os.path.join(picdir, '4in2b-r.bmp'))
     # HBlackimage = Image.open(os.path.join(picdir, '4in2c-b.bmp'))
     # HRYimage = Image.open(os.path.join(picdir, '4in2c-y.bmp'))
-    epd.display(epd.getbuffer(HBlackimage), epd.getbuffer(HRYimage))
+    epd.display(epd.getBuffer(HBlackimage), epd.getBuffer(HRYimage))
     time.sleep(2)
     
     logging.info("4.read bmp file on window")
@@ -83,16 +83,14 @@ try:
     redimage1 = Image.new('1', (epd.width, epd.height), 255)  # 298*126    
     newimage = Image.open(os.path.join(picdir, '100x100.bmp'))
     blackimage1.paste(newimage, (50,10))    
-    epd.display(epd.getbuffer(blackimage1), epd.getbuffer(redimage1))
+    epd.display(epd.getBuffer(blackimage1), epd.getBuffer(redimage1))
     
     logging.info("Clear...")
     epd.init()
-    epd.Clear()
+    epd.clear()
     
     logging.info("Goto Sleep...")
     epd.sleep()
-    time.sleep(3)
-    epd.Dev_exit()
         
 except IOError as e:
     logging.info(e)
